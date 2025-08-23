@@ -35,7 +35,9 @@ if user_input:
     response = f"You said: {user_input}"
     st.session_state["messages"].append(f"👤: {user_input}")
     st.session_state["messages"].append(f"🤖: {response}")
-    st.experimental_rerun()
+    from streamlit import rerun
+rerun()
+
 st.markdown("---")
 
 st.header("📫 Connect with me")
