@@ -1,1 +1,4 @@
-streamlit
+echo "openai\nstreamlit" > requirements.txt
+git add requirements.txt
+git commit -m "Add requirements for OpenAI chatbot"
+git push
