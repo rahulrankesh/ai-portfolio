@@ -1,0 +1,18 @@
+[
+  {
+    "question": "Tell me about your AI portfolio",
+    "answer": "I have built AI projects in NLP, Computer Vision, and Generative AI."
+  },
+  {
+    "question": "Show me some of your projects",
+    "answer": "Here are a few: AI-powered chatbot, Image Recognition system, and a Resume Analyzer."
+  },
+  {
+    "question": "What are your skills?",
+    "answer": "Python, Machine Learning, Deep Learning, Data Analytics, and Prompt Engineering."
+  },
+  {
+    "question": "How can I contact you?",
+    "answer": "You can reach me at **your.email@example.com**."
+  }
+]
