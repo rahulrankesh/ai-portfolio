@@ -1,44 +1,46 @@
 import streamlit as st
 
-st.set_page_config(page_title="Karn AI • Portfolio", layout="centered")
+# Page settings
+st.set_page_config(
+    page_title="Karn AI • Portfolio",
+    layout="centered"
+)
 
-st.title("👋 Hi, I'm Karn")
-st.subheader("AI Enthusiast | Research & Invent | Future Leader")
+# Sidebar navigation
+st.sidebar.title("📂 Navigation")
+page = st.sidebar.radio("Go to:", ["Home", "Projects", "About"])
 
-st.write("""
-Welcome to my portfolio!  
-This website is built with **Streamlit** and showcases my work in **AI, projects, and research**.
-""")
+# Home Page
+if page == "Home":
+    st.title("👋 Welcome to Karn's AI Portfolio")
+    st.write("This is my personal AI portfolio powered by **Streamlit** 🚀.")
+    st.info("Use the sidebar to explore different sections.")
 
-st.markdown("---")
+# Projects Page
+elif page == "Projects":
+    st.title("🛠️ Projects")
+    st.subheader("1. AI Dashboard Builder")
+    st.write("A tool to generate interactive dashboards from natural language queries.")
 
-st.header("🚀 Projects")
-st.write("- Project 1: AI Chatbot")
-st.write("- Project 2: Data Analytics Dashboard")
-st.write("- Project 3: Vedic Tech Research")
-st.markdown("---")
-st.header("🤖 Chat with my AI")
+    st.subheader("2. Vimana Prototype Research")
+    st.write("Researching ancient Vedic science concepts with modern AI/engineering.")
 
-# Session state to store chat history
-if "messages" not in st.session_state:
-    st.session_state["messages"] = []
+    st.subheader("3. AI Education Platform")
+    st.write("An UpGrad-like AI learning platform with auto-generated content.")
 
-# Display previous messages
-for msg in st.session_state["messages"]:
-    st.write(msg)
+# About Page
+elif page == "About":
+    st.title("ℹ️ About Me")
+    st.write("""
+    Hi, I'm Karn — a researcher and inventor.  
+    I build AI systems, experiment with ancient sciences,  
+    and create future-ready platforms.  
 
-# Input box
-user_input = st.text_input("Type your question here...")
+    **Contact:**  
+    - 📧 Email: yourname@example.com  
+    - 🐦 Twitter: [@yourhandle](https://twitter.com)  
+    - 💼 LinkedIn: [linkedin.com/in/yourhandle](https://linkedin.com)  
+    """)
 
-if user_input:
-    # For now, just echo back — later we’ll connect it to AI
-    response = f"You said: {user_input}"
-    st.session_state["messages"].append(f"👤: {user_input}")
-    st.session_state["messages"].append(f"🤖: {response}")
-    from streamlit import rerun
-rerun()
-
-st.markdown("---")
-
-st.header("📫 Connect with me")
-st.write("[LinkedIn](https://linkedin.com) | [GitHub](https://github.com) | [Email](mailto:youremail@example.com)")
+# ✅ Removed st.experimental_rerun() (deprecated)
+# If you ever need rerun, use: from streamlit import rerun; rerun()
