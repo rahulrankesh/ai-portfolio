@@ -17,10 +17,10 @@ def get_best_answer(user_input, faq_data):
     return "🤖 Sorry, I couldn’t find an exact answer. Please check the FAQ buttons!"
 
 # --- Page config ---
-st.set_page_config(page_title="AI Portfolio Chatbot", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="CG Chatbot", page_icon="🤖", layout="centered")
 
 # --- Title ---
-st.title("🤖 AI Portfolio Chatbot")
+st.title("🤖 CG Chatbot")
 
 # --- Initialize Chat History ---
 if "messages" not in st.session_state:
@@ -32,7 +32,7 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
 # --- Floating Question Buttons ---
-st.markdown("### Quick Questions:")
+st.markdown("### Ask Me:")
 cols = st.columns(len(faq_data))
 for i, item in enumerate(faq_data):
     if cols[i].button(item["question"]):
