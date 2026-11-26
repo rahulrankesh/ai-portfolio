@@ -1,0 +1,52 @@
+name: Vedra CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vedra-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend syntax and import checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+      - name: Compile backend
+        run: python -m compileall -q backend
+      - name: Install backend dependencies
+        run: pip install -r requirements.txt
+      - name: Verify FastAPI app imports
+        env:
+          OPENAI_API_KEY: test-placeholder
+          ANTHROPIC_API_KEY: test-placeholder
+        run: PYTHONPATH=backend python -c "from app.main import app; print(app.title)"
+
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('frontend/package.json') != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install --no-audit --no-fund
+      - name: Build
+        working-directory: frontend
+        run: npm run build
