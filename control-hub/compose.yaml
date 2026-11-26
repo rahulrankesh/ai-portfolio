@@ -5,7 +5,7 @@ services:
       dockerfile: control-hub/Dockerfile
     working_dir: /workspace
     volumes:
-      - ..:/workspace:rw
+      - ..:/workspace:ro
     network_mode: none
     read_only: true
     tmpfs:
