@@ -1,0 +1,19 @@
+services:
+  vedra-dev:
+    build:
+      context: ..
+      dockerfile: control-hub/Dockerfile
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace:rw
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
+    mem_limit: 1g
+    cpus: 2
