@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vedra-control-hub": {
+      "command": "/absolute/path/to/ai-portfolio/control-hub/.venv/bin/python",
+      "args": ["/absolute/path/to/ai-portfolio/control-hub/server.py"],
+      "env": {
+        "GITHUB_REPOSITORY": "rahulrankesh/ai-portfolio"
+      }
+    }
+  }
+}
