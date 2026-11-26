@@ -59,7 +59,7 @@ def _branch_ok(branch: str) -> bool:
 
 
 def _path_ok(path: str) -> bool:
-    if not path or path.startswith("/") or ".." in path.split("/") or "\\x00" in path:
+    if not path or path.startswith("/") or ".." in path.split("/") or "\x00" in path:
         return False
     parts = path.lower().split("/")
     name = parts[-1]
@@ -88,7 +88,7 @@ def repo_overview() -> dict[str, Any]:
 @mcp.tool()
 def read_repo_file(path: str, branch: str = "") -> dict[str, str]:
     """Read a text file from the configured repository. Never returns secret values from GitHub Actions."""
-    if path.startswith("/") or ".." in path.split("/") or "\x00" in path:
+    if not _path_ok(path):
         raise ValueError("Unsafe repository path.")
     ref = f"?ref={quote(branch)}" if branch else ""
     data = _request("GET", _repo_path(f"/contents/{quote(path, safe='/')}") + ref)
@@ -124,7 +124,7 @@ def commit_repo_file(path: str, content: str, branch: str, message: str, current
     """Create/update a UTF-8 file on an ai/* or control-hub/* branch; never write to the default branch."""
     if not _branch_ok(branch):
         raise ValueError("Writes are restricted to ai/* and control-hub/* branches.")
-    if path.startswith("/") or ".." in path.split("/") or "\x00" in path:
+    if not _path_ok(path):
         raise ValueError("Unsafe repository path.")
     encoded = content.encode("utf-8")
     if len(encoded) > MAX_FILE_BYTES:
