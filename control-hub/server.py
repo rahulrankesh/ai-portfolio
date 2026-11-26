@@ -58,6 +58,20 @@ def _branch_ok(branch: str) -> bool:
     return bool(branch) and not branch.startswith("-") and any(branch.startswith(p) for p in BRANCH_PREFIXES)
 
 
+def _path_ok(path: str) -> bool:
+    if not path or path.startswith("/") or ".." in path.split("/") or "\\x00" in path:
+        return False
+    parts = path.lower().split("/")
+    name = parts[-1]
+    if name == ".env" or (name.startswith(".env.") and name != ".env.example"):
+        return False
+    if name.endswith((".pem", ".key", ".p12", ".pfx")) or name in {"id_rsa", "id_ed25519", "credentials.json"}:
+        return False
+    if any(part in {".ssh", "secrets", "credentials"} for part in parts):
+        return False
+    return True
+
+
 @mcp.tool()
 def repo_overview() -> dict[str, Any]:
     """Return safe metadata for the configured Vedra repository."""
